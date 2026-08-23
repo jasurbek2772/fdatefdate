@@ -1,0 +1,1243 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>For you ♡</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Montserrat:wght@300;400;500;600&display=swap"
+        rel="stylesheet"
+    >
+
+    <style>
+
+        :root {
+            --wine: #7d1f2b;
+            --wine-dark: #58151e;
+            --cream: #eee3d0;
+            --cream-light: #f6efe3;
+            --pink: #d9a6ad;
+            --text: #35251f;
+            --gold: #b79a70;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background: var(--cream-light);
+            color: var(--text);
+            font-family: "Montserrat", sans-serif;
+            overflow-x: hidden;
+        }
+
+        /* =========================
+           INTRO
+        ========================= */
+
+        .intro {
+            position: fixed;
+            inset: 0;
+            z-index: 9999;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            background:
+                radial-gradient(
+                    circle at center,
+                    #f5ead8 0%,
+                    var(--cream) 50%,
+                    #dfcfb7 100%
+                );
+
+            transition:
+                opacity 1.2s ease,
+                visibility 1.2s ease;
+        }
+
+        .intro.hidden {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .intro-content {
+            text-align: center;
+            overflow: hidden;
+        }
+
+        .intro-small {
+            font-size: 11px;
+            letter-spacing: 7px;
+            text-transform: uppercase;
+            color: var(--wine);
+
+            opacity: 0;
+
+            animation:
+                fadeSmall 1.4s ease forwards;
+        }
+
+        .intro-title {
+            margin-top: 15px;
+
+            font-family: "Cormorant Garamond", serif;
+
+            font-size: clamp(70px, 14vw, 150px);
+
+            font-weight: 500;
+            font-style: italic;
+
+            color: var(--wine);
+
+            white-space: nowrap;
+
+            opacity: 0;
+            transform: translateX(-100%);
+
+            animation:
+                titleReveal 2s
+                cubic-bezier(.22,.61,.36,1)
+                .4s
+                forwards;
+        }
+
+        .intro-line {
+            width: 0;
+            height: 1px;
+
+            margin: 15px auto 0;
+
+            background: var(--gold);
+
+            animation:
+                lineReveal 1.2s
+                ease
+                1.7s
+                forwards;
+        }
+
+        @keyframes titleReveal {
+
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+
+        }
+
+        @keyframes fadeSmall {
+
+            to {
+                opacity: 1;
+            }
+
+        }
+
+        @keyframes lineReveal {
+
+            to {
+                width: 150px;
+            }
+
+        }
+
+        /* =========================
+           DECOR
+        ========================= */
+
+        .decor {
+            position: absolute;
+
+            width: 250px;
+            height: 250px;
+
+            border:
+                1px solid
+                rgba(125,31,43,.12);
+
+            border-radius: 50%;
+        }
+
+        .decor.one {
+            top: -120px;
+            left: -100px;
+        }
+
+        .decor.two {
+            right: -120px;
+            bottom: -120px;
+        }
+
+        /* =========================
+           MAIN
+        ========================= */
+
+        main {
+            opacity: 0;
+            transform: translateY(30px);
+
+            animation:
+                mainAppear 1.5s
+                ease
+                2.7s
+                forwards;
+        }
+
+        @keyframes mainAppear {
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+
+        }
+
+        section {
+            width: min(1100px, calc(100% - 40px));
+            margin: auto;
+        }
+
+        /* =========================
+           HERO
+        ========================= */
+
+        .hero {
+            min-height: 100vh;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            text-align: center;
+
+            padding: 80px 0;
+        }
+
+        .hero-card {
+            width: 100%;
+            max-width: 850px;
+
+            padding: 80px 50px;
+
+            border:
+                1px solid
+                rgba(125,31,43,.18);
+
+            background:
+                linear-gradient(
+                    145deg,
+                    rgba(255,255,255,.45),
+                    rgba(238,227,208,.65)
+                );
+
+            box-shadow:
+                0 30px 80px
+                rgba(73,42,29,.12);
+
+            position: relative;
+        }
+
+        .hero-card::before,
+        .hero-card::after {
+            content: "";
+
+            position: absolute;
+
+            width: 35px;
+            height: 35px;
+
+            border-color: var(--wine);
+            border-style: solid;
+        }
+
+        .hero-card::before {
+
+            top: 18px;
+            left: 18px;
+
+            border-width:
+                1px 0 0 1px;
+        }
+
+        .hero-card::after {
+
+            right: 18px;
+            bottom: 18px;
+
+            border-width:
+                0 1px 1px 0;
+        }
+
+        .eyebrow {
+            font-size: 11px;
+
+            letter-spacing: 5px;
+
+            text-transform: uppercase;
+
+            color: var(--wine);
+
+            margin-bottom: 25px;
+        }
+
+        h1 {
+
+            font-family:
+                "Cormorant Garamond",
+                serif;
+
+            font-size:
+                clamp(55px, 8vw, 90px);
+
+            line-height: .95;
+
+            font-weight: 500;
+
+            color: var(--wine);
+        }
+
+        .hero-text {
+
+            max-width: 600px;
+
+            margin: 35px auto 0;
+
+            font-size: 16px;
+
+            line-height: 1.9;
+
+            font-weight: 300;
+        }
+
+        .heart {
+
+            margin-top: 35px;
+
+            color: var(--pink);
+
+            font-size: 25px;
+        }
+
+        /* =========================
+           INVITATION
+        ========================= */
+
+        .invitation {
+            padding: 100px 0;
+        }
+
+        .section-label {
+
+            text-align: center;
+
+            font-size: 10px;
+
+            letter-spacing: 5px;
+
+            text-transform: uppercase;
+
+            color: var(--wine);
+
+            margin-bottom: 20px;
+        }
+
+        .section-title {
+
+            text-align: center;
+
+            font-family:
+                "Cormorant Garamond",
+                serif;
+
+            font-size:
+                clamp(45px, 6vw, 65px);
+
+            font-weight: 500;
+
+            color: var(--wine);
+
+            margin-bottom: 60px;
+        }
+
+        .invitation-box {
+
+            max-width: 800px;
+
+            margin: auto;
+
+            text-align: center;
+
+            padding: 55px 45px;
+
+            background: var(--wine);
+
+            color: var(--cream-light);
+
+            box-shadow:
+                0 30px 70px
+                rgba(88,21,30,.2);
+        }
+
+        .invitation-box p {
+
+            font-family:
+                "Cormorant Garamond",
+                serif;
+
+            font-size:
+                clamp(25px, 4vw, 34px);
+
+            line-height: 1.5;
+        }
+
+        .signature {
+
+            margin-top: 30px;
+
+            font-family:
+                "Cormorant Garamond",
+                serif;
+
+            font-size: 25px;
+
+            font-style: italic;
+
+            color: var(--pink);
+        }
+
+        /* =========================
+           LOCATION
+        ========================= */
+
+        .location {
+            padding: 100px 0;
+        }
+
+        .location-card {
+
+            overflow: hidden;
+
+            background: #e5d8c4;
+
+            border:
+                1px solid
+                rgba(125,31,43,.16);
+        }
+
+        #map {
+
+            width: 100%;
+
+            height: 450px;
+        }
+
+        .location-info {
+
+            padding: 35px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            gap: 30px;
+        }
+
+        .location-info h3 {
+
+            font-family:
+                "Cormorant Garamond",
+                serif;
+
+            font-size: 34px;
+
+            font-weight: 500;
+
+            color: var(--wine);
+        }
+
+        .location-info p {
+
+            margin-top: 5px;
+
+            font-size: 13px;
+
+            letter-spacing: 1px;
+
+            opacity: .75;
+        }
+
+        .map-button {
+
+            display: inline-block;
+
+            padding: 14px 25px;
+
+            border:
+                1px solid
+                var(--wine);
+
+            color: var(--wine);
+
+            text-decoration: none;
+
+            font-size: 11px;
+
+            letter-spacing: 2px;
+
+            text-transform: uppercase;
+
+            transition: .3s ease;
+        }
+
+        .map-button:hover {
+
+            background: var(--wine);
+
+            color: var(--cream-light);
+        }
+
+        /* =========================
+           DETAILS
+        ========================= */
+
+        .details {
+
+            padding:
+                100px 0
+                150px;
+
+            text-align: center;
+        }
+
+        .details-box {
+
+            max-width: 700px;
+
+            margin: auto;
+        }
+
+        .details-text {
+
+            font-family:
+                "Cormorant Garamond",
+                serif;
+
+            font-size:
+                clamp(27px, 4vw, 38px);
+
+            line-height: 1.45;
+
+            color: var(--text);
+        }
+
+        .details-subtext {
+
+            margin-top: 25px;
+
+            font-size: 13px;
+
+            line-height: 1.8;
+
+            font-weight: 300;
+
+            opacity: .7;
+        }
+
+        .yes-button {
+
+            margin-top: 40px;
+
+            display: inline-block;
+
+            padding: 17px 40px;
+
+            background: var(--wine);
+
+            color: var(--cream-light);
+
+            text-decoration: none;
+
+            font-size: 11px;
+
+            letter-spacing: 3px;
+
+            text-transform: uppercase;
+
+            transition:
+                transform .3s ease,
+                background .3s ease;
+        }
+
+        .yes-button:hover {
+
+            background:
+                var(--wine-dark);
+
+            transform:
+                translateY(-3px);
+        }
+
+        /* =========================
+           FOOTER
+        ========================= */
+
+        footer {
+
+            padding: 30px;
+
+            text-align: center;
+
+            font-family:
+                "Cormorant Garamond",
+                serif;
+
+            font-size: 18px;
+
+            color: var(--wine);
+        }
+
+        /* =========================
+           MOBILE
+        ========================= */
+
+        @media (max-width: 650px) {
+
+            section {
+
+                width:
+                    min(
+                        100% - 25px,
+                        1100px
+                    );
+            }
+
+            .hero-card {
+
+                padding:
+                    65px 25px;
+            }
+
+            .hero-text {
+
+                font-size: 14px;
+            }
+
+            .invitation,
+            .location {
+
+                padding: 70px 0;
+            }
+
+            .details {
+
+                padding:
+                    70px 0
+                    100px;
+            }
+
+            .invitation-box {
+
+                padding:
+                    45px 25px;
+            }
+
+            .location-info {
+
+                flex-direction: column;
+
+                align-items:
+                    flex-start;
+            }
+
+            #map {
+
+                height: 350px;
+            }
+
+            .intro-title {
+
+                font-size: 72px;
+            }
+
+        }
+
+    </style>
+</head>
+
+
+<body>
+
+
+<!-- =====================================================
+     INTRO
+===================================================== -->
+
+<div class="intro" id="intro">
+
+    <div class="decor one"></div>
+    <div class="decor two"></div>
+
+    <div class="intro-content">
+
+        <div class="intro-small">
+            something special
+        </div>
+
+        <div class="intro-title">
+            For you!
+        </div>
+
+        <div class="intro-line"></div>
+
+    </div>
+
+</div>
+
+
+<!-- =====================================================
+     MAIN
+===================================================== -->
+
+<main>
+
+
+    <!-- HERO -->
+
+    <section class="hero" id="hero">
+
+        <div class="hero-card">
+
+            <div class="eyebrow">
+                One little invitation
+            </div>
+
+            <h1>
+                У меня есть<br>
+                предложение...
+            </h1>
+
+            <p class="hero-text">
+                И оно немного отличается
+                от обычного
+                «пойдём куда-нибудь».
+            </p>
+
+            <div class="heart">
+                ♡
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- INVITATION -->
+
+    <section
+        class="invitation"
+        id="invitation"
+    >
+
+        <div class="section-label">
+            Invitation
+        </div>
+
+        <h2 class="section-title">
+            Давай встретимся?
+        </h2>
+
+        <div class="invitation-box">
+
+            <p>
+                Я хочу пригласить тебя
+                на свидание.
+                <br><br>
+
+                Без лишней официальности —
+                просто хочу провести с тобой
+                немного времени,
+                поговорить, посмеяться
+                и создать один хороший вечер.
+            </p>
+
+            <div class="signature">
+                Только ты и я ♡
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- LOCATION -->
+
+    <section
+        class="location"
+        id="location"
+    >
+
+        <div class="section-label">
+            The place
+        </div>
+
+        <h2 class="section-title">
+            Где встретимся
+        </h2>
+
+        <div class="location-card">
+
+            <div id="map"></div>
+
+            <div class="location-info">
+
+                <div>
+
+                    <h3>
+                        ул. Авиаторов, 19
+                    </h3>
+
+                    <p>
+                        Красноярск
+                    </p>
+
+                </div>
+
+                <a
+                    class="map-button"
+                    id="mapButton"
+                    href="https://yandex.ru/maps/?text=Красноярск%2C%20ул.%20Авиаторов%2C%2019"
+                    target="_blank"
+                >
+                    Открыть маршрут
+                </a>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- DETAILS -->
+
+    <section
+        class="details"
+        id="details"
+    >
+
+        <div class="details-box">
+
+            <div class="section-label">
+                And one more thing
+            </div>
+
+            <div class="details-text">
+                А остальные детали
+                предлагаю обсудить вместе.
+            </div>
+
+            <p class="details-subtext">
+
+                Во сколько встретиться,
+                куда пойти после
+                и каким будет этот вечер —
+                решим вместе.
+
+                <br>
+
+                Главное, чтобы нам обоим
+                было хорошо.
+
+            </p>
+
+            <a
+                href="#"
+                class="yes-button"
+                id="yesButton"
+            >
+                Договорились ♡
+            </a>
+
+        </div>
+
+    </section>
+
+
+</main>
+
+
+<footer>
+    Made especially for you ♡
+</footer>
+
+
+<!-- =====================================================
+     YANDEX MAPS
+===================================================== -->
+
+<script
+    src="https://api-maps.yandex.ru/2.1/?apikey=YOUR_API_KEY&lang=ru_RU">
+</script>
+
+
+<script>
+
+    /* =====================================================
+       VK NOTIFICATIONS
+    ===================================================== */
+
+    async function notifyVK(text) {
+
+        try {
+
+            await fetch("/api/send", {
+
+                method: "POST",
+
+                headers: {
+                    "Content-Type": "application/json"
+                },
+
+                body: JSON.stringify({
+                    text: text
+                })
+
+            });
+
+        } catch (error) {
+
+            /*
+                Ошибка уведомления не должна
+                ломать сам сайт.
+            */
+
+            console.log(
+                "VK notification error:",
+                error
+            );
+
+        }
+
+    }
+
+
+    /* =====================================================
+       SESSION ID
+    ===================================================== */
+
+    let sessionId =
+        sessionStorage.getItem("date_session");
+
+    if (!sessionId) {
+
+        sessionId =
+            Math.random()
+                .toString(36)
+                .substring(2, 10);
+
+        sessionStorage.setItem(
+            "date_session",
+            sessionId
+        );
+
+    }
+
+
+    /* =====================================================
+       SITE OPEN
+    ===================================================== */
+
+    notifyVK(
+        `❤️ Открыла сайт с приглашением\n\n` +
+        `Сессия: ${sessionId}\n` +
+        `Время: ${new Date().toLocaleString("ru-RU")}`
+    );
+
+
+    /* =====================================================
+       INTRO FINISHED
+    ===================================================== */
+
+    setTimeout(() => {
+
+        document
+            .getElementById("intro")
+            .classList.add("hidden");
+
+    }, 3500);
+
+
+    /* =====================================================
+       CLICK TRACKING
+    ===================================================== */
+
+    document.addEventListener(
+        "click",
+        function(event) {
+
+            const target =
+                event.target.closest(
+                    "a, button"
+                );
+
+            if (!target) {
+                return;
+            }
+
+
+            const text =
+                target.innerText.trim();
+
+
+            if (!text) {
+                return;
+            }
+
+
+            notifyVK(
+                `👆 Действие на сайте\n\n` +
+                `Нажала: «${text}»\n` +
+                `Сессия: ${sessionId}\n` +
+                `Время: ${new Date().toLocaleString("ru-RU")}`
+            );
+
+        }
+    );
+
+
+    /* =====================================================
+       MAP BUTTON
+    ===================================================== */
+
+    document
+        .getElementById("mapButton")
+        .addEventListener(
+            "click",
+            function() {
+
+                notifyVK(
+                    `📍 Открыла маршрут\n\n` +
+                    `Адрес: ул. Авиаторов, 19\n` +
+                    `Красноярск\n\n` +
+                    `Сессия: ${sessionId}`
+                );
+
+            }
+        );
+
+
+    /* =====================================================
+       YES BUTTON
+    ===================================================== */
+
+    document
+        .getElementById("yesButton")
+        .addEventListener(
+            "click",
+            function(event) {
+
+                event.preventDefault();
+
+                notifyVK(
+                    `❤️❤️❤️ ПОХОЖЕ, ОНА СОГЛАСИЛАСЬ!\n\n` +
+                    `Нажала: «Договорились ♡»\n` +
+                    `Сессия: ${sessionId}\n` +
+                    `Время: ${new Date().toLocaleString("ru-RU")}`
+                );
+
+                alert(
+                    "Тогда договорились ♡"
+                );
+
+            }
+        );
+
+
+    /* =====================================================
+       SECTION TRACKING
+    ===================================================== */
+
+    const sections = {
+
+        invitation: "💌 Дошла до приглашения",
+
+        location: "📍 Дошла до блока с местом",
+
+        details: "♡ Дошла до финального блока"
+
+    };
+
+
+    const observedSections =
+        new Set();
+
+
+    const observer =
+        new IntersectionObserver(
+
+            entries => {
+
+                entries.forEach(entry => {
+
+                    if (
+                        entry.isIntersecting &&
+                        !observedSections.has(
+                            entry.target.id
+                        )
+                    ) {
+
+                        observedSections.add(
+                            entry.target.id
+                        );
+
+
+                        const message =
+                            sections[
+                                entry.target.id
+                            ];
+
+
+                        if (message) {
+
+                            notifyVK(
+                                `${message}\n\n` +
+                                `Сессия: ${sessionId}\n` +
+                                `Время: ${new Date().toLocaleString("ru-RU")}`
+                            );
+
+                        }
+
+                    }
+
+                });
+
+            },
+
+            {
+                threshold: 0.5
+            }
+
+        );
+
+
+    Object.keys(sections)
+        .forEach(id => {
+
+            const element =
+                document.getElementById(id);
+
+            if (element) {
+
+                observer.observe(element);
+
+            }
+
+        });
+
+
+    /* =====================================================
+       YANDEX MAP
+    ===================================================== */
+
+    ymaps.ready(initMap);
+
+
+    function initMap() {
+
+        /*
+            Координаты Авиаторов, 19.
+        */
+
+        const location = [
+            56.0496,
+            92.9086
+        ];
+
+
+        const map =
+            new ymaps.Map(
+                "map",
+                {
+
+                    center:
+                        location,
+
+                    zoom: 16,
+
+                    controls: [
+                        "zoomControl"
+                    ]
+
+                }
+            );
+
+
+        const placemark =
+            new ymaps.Placemark(
+
+                location,
+
+                {
+
+                    balloonContentHeader:
+                        "Наше место встречи ♡",
+
+                    balloonContentBody:
+                        "ул. Авиаторов, 19<br>" +
+                        "Красноярск",
+
+                    hintContent:
+                        "ул. Авиаторов, 19"
+
+                },
+
+                {
+
+                    preset:
+                        "islands#redHeartIcon"
+
+                }
+
+            );
+
+
+        map.geoObjects.add(
+            placemark
+        );
+
+
+        placemark.balloon.open();
+
+
+        notifyVK(
+            `🗺️ Карта загрузилась\n\n` +
+            `Сессия: ${sessionId}`
+        );
+
+    }
+
+</script>
+
+</body>
+</html>
