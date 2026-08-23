@@ -1205,26 +1205,97 @@ const dateStatus =
 
 
 /*
-    Запрещаем выбирать прошедшие даты.
+    Разрешённый диапазон:
+    от сегодня до +10 дней.
 */
 
-const today =
-    new Date()
-        .toISOString()
-        .split("T")[0];
+function formatDate(date) {
 
-availableDate.min = today;
+    return date.toLocaleDateString(
+        "ru-RU",
+        {
+            day: "numeric",
+            month: "long",
+            year: "numeric"
+        }
+    );
+
+}
 
 
 /*
-    Когда она выбирает дату.
+    Сегодня.
+*/
+
+const todayDate = new Date();
+
+todayDate.setHours(0, 0, 0, 0);
+
+
+/*
+    Максимальная дата — через 10 дней.
+*/
+
+const maxDate = new Date(todayDate);
+
+maxDate.setDate(
+    maxDate.getDate() + 10
+);
+
+
+/*
+    Преобразуем даты в YYYY-MM-DD
+    для input type="date".
+*/
+
+function toInputDate(date) {
+
+    const year =
+        date.getFullYear();
+
+    const month =
+        String(
+            date.getMonth() + 1
+        ).padStart(2, "0");
+
+    const day =
+        String(
+            date.getDate()
+        ).padStart(2, "0");
+
+    return `${year}-${month}-${day}`;
+
+}
+
+
+/*
+    Устанавливаем допустимый диапазон.
+*/
+
+availableDate.min =
+    toInputDate(todayDate);
+
+availableDate.max =
+    toInputDate(maxDate);
+
+
+/*
+    Проверяем выбранную дату.
 */
 
 availableDate.addEventListener(
     "change",
     function() {
 
-        if (!this.value) {
+        const value = this.value;
+
+
+        /*
+            Если дату убрали —
+            ничего не делаем.
+        */
+
+        if (!value) {
 
             dateStatus.textContent = "";
 
@@ -1233,24 +1304,56 @@ availableDate.addEventListener(
             );
 
             return;
+
         }
 
 
         const selectedDate =
             new Date(
-                this.value + "T00:00:00"
+                value + "T00:00:00"
             );
 
+
+        /*
+            Дополнительная проверка.
+            Она нужна даже несмотря на min/max,
+            потому что ограничения HTML можно
+            обойти вручную.
+        */
+
+        if (
+            selectedDate < todayDate ||
+            selectedDate > maxDate
+        ) {
+
+            this.value = "";
+
+            dateStatus.textContent =
+                "Можно выбрать только ближайшие 10 дней ♡";
+
+            dateStatus.classList.add(
+                "visible"
+            );
+
+            notifyVK(
+                `⚠️ Попыталась выбрать недопустимую дату\n\n` +
+                `Разрешённый период: ` +
+                `${formatDate(todayDate)} — ` +
+                `${formatDate(maxDate)}\n\n` +
+                `Сессия: ${sessionId}`
+            );
+
+            return;
+
+        }
+
+
+        /*
+            Всё хорошо.
+        */
 
         const formattedDate =
-            selectedDate.toLocaleDateString(
-                "ru-RU",
-                {
-                    day: "numeric",
-                    month: "long",
-                    year: "numeric"
-                }
-            );
+            formatDate(selectedDate);
 
 
         dateStatus.textContent =
