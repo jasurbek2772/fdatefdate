@@ -598,6 +598,125 @@
                 translateY(-3px);
         }
 
+/* =========================
+   DATE FORM
+========================= */
+
+.date-form {
+    max-width: 500px;
+    margin: 45px auto 0;
+    text-align: left;
+}
+
+.date-label {
+    display: block;
+
+    text-align: center;
+
+    font-family:
+        "Cormorant Garamond",
+        serif;
+
+    font-size: 28px;
+
+    color: var(--wine);
+
+    margin-bottom: 8px;
+}
+
+.date-hint {
+    text-align: center;
+
+    font-size: 11px;
+
+    line-height: 1.6;
+
+    opacity: .6;
+
+    margin-bottom: 22px;
+}
+
+.date-input-wrapper {
+    position: relative;
+}
+
+.date-input {
+    width: 100%;
+
+    padding: 17px 20px;
+
+    background:
+        rgba(255,255,255,.45);
+
+    border:
+        1px solid
+        rgba(125,31,43,.25);
+
+    color: var(--text);
+
+    font-family:
+        "Montserrat",
+        sans-serif;
+
+    font-size: 14px;
+
+    outline: none;
+
+    transition:
+        border-color .3s ease,
+        box-shadow .3s ease;
+}
+
+.date-input:focus {
+    border-color: var(--wine);
+
+    box-shadow:
+        0 8px 25px
+        rgba(125,31,43,.08);
+}
+
+.date-input::-webkit-calendar-picker-indicator {
+    cursor: pointer;
+
+    opacity: .65;
+}
+
+.date-status {
+    min-height: 20px;
+
+    margin-top: 12px;
+
+    text-align: center;
+
+    font-family:
+        "Cormorant Garamond",
+        serif;
+
+    font-size: 20px;
+
+    color: var(--wine);
+
+    opacity: 0;
+
+    transition: opacity .3s ease;
+}
+
+.date-status.visible {
+    opacity: 1;
+}
+
+@media (max-width: 650px) {
+
+    .date-form {
+        margin-top: 35px;
+    }
+
+    .date-label {
+        font-size: 25px;
+    }
+
+}
+        
         /* =========================
            FOOTER
         ========================= */
@@ -853,24 +972,58 @@
                 А остальные детали раскажу чуть позже и при встерче.
             </div>
 
-            <p class="details-subtext">
+          <p class="details-subtext">
 
-                Во сколько встретиться,
-                куда пойти после
-                и тд.
+    Во сколько встретиться,
+    куда пойти после
+    и тд.
 
-                <br>
+    <br>
 
-                
-            </p>
+    
+</p>
 
-            <a
-                href="#"
-                class="yes-button"
-                id="yesButton"
-            >
-                Договорились ♡
-            </a>
+
+<!-- DATE FORM -->
+
+<div class="date-form">
+
+    <label
+        for="availableDate"
+        class="date-label"
+    >
+        Когда ты свободна?
+    </label>
+
+    <div class="date-hint">
+        Если пока не знаешь — можешь оставить поле пустым ♡
+    </div>
+
+    <div class="date-input-wrapper">
+
+        <input
+            type="date"
+            id="availableDate"
+            class="date-input"
+        >
+
+    </div>
+
+    <div
+        class="date-status"
+        id="dateStatus"
+    ></div>
+
+</div>
+
+
+<a
+    href="#"
+    class="yes-button"
+    id="yesButton"
+>
+    Договорились ♡
+</a>
 
         </div>
 
@@ -1040,31 +1193,159 @@
         );
 
 
+/* =====================================================
+   DATE SELECTION
+===================================================== */
+
+const availableDate =
+    document.getElementById("availableDate");
+
+const dateStatus =
+    document.getElementById("dateStatus");
+
+
+/*
+    Запрещаем выбирать прошедшие даты.
+*/
+
+const today =
+    new Date()
+        .toISOString()
+        .split("T")[0];
+
+availableDate.min = today;
+
+
+/*
+    Когда она выбирает дату.
+*/
+
+availableDate.addEventListener(
+    "change",
+    function() {
+
+        if (!this.value) {
+
+            dateStatus.textContent = "";
+
+            dateStatus.classList.remove(
+                "visible"
+            );
+
+            return;
+        }
+
+
+        const selectedDate =
+            new Date(
+                this.value + "T00:00:00"
+            );
+
+
+        const formattedDate =
+            selectedDate.toLocaleDateString(
+                "ru-RU",
+                {
+                    day: "numeric",
+                    month: "long",
+                    year: "numeric"
+                }
+            );
+
+
+        dateStatus.textContent =
+            `Записала ♡ ${formattedDate}`;
+
+
+        dateStatus.classList.add(
+            "visible"
+        );
+
+
+        notifyVK(
+            `📅 Она выбрала дату\n\n` +
+            `Дата: ${formattedDate}\n` +
+            `Сессия: ${sessionId}\n` +
+            `Время: ${new Date().toLocaleString("ru-RU")}`
+        );
+
+    }
+);
+    
     /* =====================================================
        YES BUTTON
     ===================================================== */
 
     document
-        .getElementById("yesButton")
-        .addEventListener(
-            "click",
-            function(event) {
+    .getElementById("yesButton")
+    .addEventListener(
+        "click",
+        function(event) {
 
-                event.preventDefault();
+            event.preventDefault();
 
-                notifyVK(
-                    `❤️❤️❤️ ПОХОЖЕ, ОНА СОГЛАСИЛАСЬ!\n\n` +
-                    `Нажала: «Договорились ♡»\n` +
-                    `Сессия: ${sessionId}\n` +
-                    `Время: ${new Date().toLocaleString("ru-RU")}`
-                );
+
+            const selectedDate =
+                document.getElementById(
+                    "availableDate"
+                ).value;
+
+
+            let dateMessage;
+
+
+            if (selectedDate) {
+
+                const date =
+                    new Date(
+                        selectedDate + "T00:00:00"
+                    );
+
+                dateMessage =
+                    date.toLocaleDateString(
+                        "ru-RU",
+                        {
+                            day: "numeric",
+                            month: "long",
+                            year: "numeric"
+                        }
+                    );
+
+            } else {
+
+                dateMessage =
+                    "Дату не указала — решит сам";
+
+            }
+
+
+            notifyVK(
+                `❤️❤️❤️ ПОХОЖЕ, ОНА СОГЛАСИЛАСЬ!\n\n` +
+                `Нажала: «Договорились ♡»\n\n` +
+                `📅 Доступность: ${dateMessage}\n\n` +
+                `Сессия: ${sessionId}\n` +
+                `Время: ${new Date().toLocaleString("ru-RU")}`
+            );
+
+
+            if (selectedDate) {
 
                 alert(
-                    "Тогда договорились ♡"
+                    "Отлично ♡\n\n" +
+                    "Я записал этот день."
+                );
+
+            } else {
+
+                alert(
+                    "Хорошо ♡\n\n" +
+                    "Тогда я сам всё решу."
                 );
 
             }
-        );
+
+        }
+    );
 
 
     /* =====================================================
