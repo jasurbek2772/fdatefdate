@@ -913,52 +913,38 @@
 
 
     <!-- LOCATION -->
-
-    <section
-        class="location"
-        id="location"
-    >
-
-        <div class="section-label">
-            The place
-        </div>
-
-        <h2 class="section-title">
-            Где встретимся
-        </h2>
-
-        <div class="location-card">
-
-            <div id="map"></div>
-
-            <div class="location-info">
-
-                <div>
-
-                    <h3>
-                        ул. Авиаторов, 19
-                    </h3>
-
-                    <p>
-                        Красноярск
-                    </p>
-
-                </div>
-
-                <a
-                    class="map-button"
-                    id="mapButton"
-                    href="https://yandex.ru/maps/org/park_imeni_400_letiya_goroda_krasnoyarska/7907152374/?yclid="
-                >
-                    Открыть маршрут
-                </a>
-
+<section
+    class="location"
+    id="location"
+>
+    <div class="section-label">
+        The place
+    </div>
+    <h2 class="section-title">
+        Где встретимся
+    </h2>
+    <div class="location-card">
+        <div id="map"></div>
+        <div class="location-info">
+            <div>
+                <h3>
+                    Парк им. 400-летия<br>города Красноярска
+                </h3>
+                <p>
+                    мкр. Взлётка · Красноярск
+                </p>
             </div>
-
+            <a
+                class="map-button"
+                id="mapButton"
+                href="https://yandex.ru/maps/org/park_imeni_400_letiya_goroda_krasnoyarska/7907152374/"
+                target="_blank"
+            >
+                Открыть маршрут
+            </a>
         </div>
-
-    </section>
-
+    </div>
+</section>
 
     <!-- DETAILS -->
 
@@ -1182,20 +1168,18 @@
     ===================================================== */
 
     document
-        .getElementById("mapButton")
-        .addEventListener(
-            "click",
-            function() {
-
-                notifyVK(
-                    `📍 Открыла маршрут\n\n` +
-                    `Адрес: ул. Авиаторов, 19\n` +
-                    `Красноярск\n\n` +
-                    `Сессия: ${sessionId}`
-                );
-
-            }
-        );
+    .getElementById("mapButton")
+    .addEventListener(
+        "click",
+        function() {
+            notifyVK(
+                `📍 Открыла маршрут\n\n` +
+                `Место: Парк им. 400-летия города Красноярска\n` +
+                `мкр. Взлётка, Красноярск\n\n` +
+                `Сессия: ${sessionId}`
+            );
+        }
+    );
 
 
 /* =====================================================
@@ -1542,83 +1526,53 @@ availableDate.addEventListener(
        YANDEX MAP
     ===================================================== */
 
-    ymaps.ready(initMap);
+   ymaps.ready(initMap);
 
+function initMap() {
+    /*
+        Координаты Парка им. 400-летия города Красноярска
+    */
+    const location = [
+        56.0405,
+        92.9192
+    ];
 
-    function initMap() {
+    const map = new ymaps.Map(
+        "map",
+        {
+            center: location,
+            zoom: 16,
+            controls: [
+                "zoomControl"
+            ]
+        }
+    );
 
-        /*
-            Координаты Авиаторов, 19.
-        */
+    const placemark = new ymaps.Placemark(
+        location,
+        {
+            balloonContentHeader:
+                "Наше место встречи ♡",
+            balloonContentBody:
+                "Парк им. 400-летия города Красноярска<br>" +
+                "мкр. Взлётка, Красноярск",
+            hintContent:
+                "Парк 400-летия"
+        },
+        {
+            preset:
+                "islands#redHeartIcon"
+        }
+    );
 
-        const location = [
-            56.0496,
-            92.9086
-        ];
+    map.geoObjects.add(placemark);
+    placemark.balloon.open();
 
-
-        const map =
-            new ymaps.Map(
-                "map",
-                {
-
-                    center:
-                        location,
-
-                    zoom: 16,
-
-                    controls: [
-                        "zoomControl"
-                    ]
-
-                }
-            );
-
-
-        const placemark =
-            new ymaps.Placemark(
-
-                location,
-
-                {
-
-                    balloonContentHeader:
-                        "Наше место встречи ♡",
-
-                    balloonContentBody:
-                        "ул. Авиаторов, 19<br>" +
-                        "Красноярск",
-
-                    hintContent:
-                        "ул. Авиаторов, 19"
-
-                },
-
-                {
-
-                    preset:
-                        "islands#redHeartIcon"
-
-                }
-
-            );
-
-
-        map.geoObjects.add(
-            placemark
-        );
-
-
-        placemark.balloon.open();
-
-
-        notifyVK(
-            `🗺️ Карта загрузилась\n\n` +
-            `Сессия: ${sessionId}`
-        );
-
-    }
-
+    notifyVK(
+        `🗺️ Карта загрузилась\n\n` +
+        `Сессия: ${sessionId}`
+    );
+}
 </script>
 
 </body>
