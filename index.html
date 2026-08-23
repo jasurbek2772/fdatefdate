@@ -806,7 +806,76 @@
             }
 
         }
+/* =========================
+   SCROLL HINT
+========================= */
+.scroll-hint {
+    display: flex;
+    justify-content: center;
+    padding: 10px 0 40px;
+    margin-top: -60px;          /* чуть поднимаем к hero */
+    position: relative;
+    z-index: 5;
+}
 
+.scroll-arrow {
+    width: 28px;
+    height: 48px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    cursor: pointer;
+    opacity: 0.7;
+    transition: opacity 0.3s ease;
+}
+
+.scroll-arrow:hover {
+    opacity: 1;
+}
+
+.scroll-arrow span {
+    display: block;
+    width: 12px;
+    height: 12px;
+    border-bottom: 2px solid var(--wine);
+    border-right: 2px solid var(--wine);
+    transform: rotate(45deg);
+    animation: arrowBounce 1.8s infinite ease-in-out;
+    opacity: 0.35;
+}
+
+.scroll-arrow span:nth-child(2) {
+    animation-delay: 0.2s;
+    opacity: 0.55;
+}
+
+.scroll-arrow span:nth-child(3) {
+    animation-delay: 0.4s;
+    opacity: 0.8;
+}
+
+@keyframes arrowBounce {
+    0% {
+        opacity: 0;
+        transform: rotate(45deg) translate(-8px, -8px);
+    }
+    50% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+        transform: rotate(45deg) translate(8px, 8px);
+    }
+}
+
+/* На мобильных чуть компактнее */
+@media (max-width: 650px) {
+    .scroll-hint {
+        margin-top: -40px;
+        padding-bottom: 30px;
+    }
+}
     </style>
 </head>
 
@@ -876,7 +945,14 @@
 
     </section>
 
-
+<!-- SCROLL DOWN ARROW -->
+<div class="scroll-hint" id="scrollHint">
+    <div class="scroll-arrow">
+        <span></span>
+        <span></span>
+        <span></span>
+    </div>
+</div>
     <!-- INVITATION -->
 
     <section
@@ -1573,6 +1649,15 @@ function initMap() {
         `Сессия: ${sessionId}`
     );
 }
+
+    /* =====================================================
+   SCROLL HINT CLICK
+===================================================== */
+document.getElementById("scrollHint")?.addEventListener("click", () => {
+    document.getElementById("invitation")?.scrollIntoView({
+        behavior: "smooth"
+    });
+});
 </script>
 
 </body>
